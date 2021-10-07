@@ -2,14 +2,13 @@
   "Jump to the x% and y% offsets.
    x, y are values between 0 and 1"
   (interactive)
-  
+
 )
 
-;; TODO: so we actually want to change this to the screen width and height instead
 ;; TODO: change this to a map
 (defun convert-percentage-to-absolute-pixel-position (x y)
   (let ((screen-info (screen-width-height)))
-    (cons (* x (car (screen-info))) (* y (cdr (screen-info))))))
+    (cons (* x (car screen-info)) (* y (cdr screen-info)))))
 
 (defun screen-width-height () ;; -> (w, h) in pixels
   (cons (window--size-to-pixel nil (window-total-width)) (window--size-to-pixel nil (window-total-height)))
@@ -17,7 +16,6 @@
 
 ;;;;;;;;;;;;;;;; test cases
 (message "%s" (convert-percentage-to-absolute-pixel-position 0.5 0.5))
-;; (message "%s" (screen-width-height))
 
 ;;;;;;;;;;;;;;;; misc notes
 
