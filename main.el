@@ -1,21 +1,46 @@
-(defun jump-to-percentage-position (x y)
-  "Jump to the x% and y% offsets.
-   x, y are values between 0 and 1"
-  (interactive)
+;; Creds to base: https://emacs.stackexchange.com/questions/30852/how-can-i-move-point-to-where-the-mouse-is-pointing-now
+;; (defun jump-to-percentage-position (x y)
+;;   "Jump to the x% and y% offsets.
+;;    x, y are values between 0 and 1"
+;;   (interactive)
+;;   (when-let ((cursor-pos (convert-percentage-to-position x y))
+;;          (line (cddr cursor-pos))
+;;          (col  (cadr cursor-pos))
+;;          (p (save-excursion
+;;           (goto-char (window-start))
+;;           (forward-line line)
+;;           (if (> (- (line-end-position) (line-beginning-position)) col)
+;;               (progn  (move-to-column col) (1- (point)))
+;;             nil))))
+;;     (goto-char p)))
 
-)
+(defun jump-to-cursor ()
+  "Jump to the position under the mouse cursor if possible."
+  (interactive)
+  (message "fuck")
+  (when-let ((cursor-pos (mouse-position))
+         (line (cddr cursor-pos))
+         (col  (cadr cursor-pos))
+         (p (save-excursion
+          (goto-char (window-start))
+          (forward-line line)
+          (if (> (- (line-end-position) (line-beginning-position)) col)
+              (progn  (move-to-column col) (1- (point)))
+            nil))))
+    (goto-char p)))
 
 ;; TODO: change this to a map
-(defun convert-percentage-to-absolute-pixel-position (x y)
+(defun convert-percentage-to-position (x y)
   (let ((screen-info (screen-width-height)))
     (cons (* x (car screen-info)) (* y (cdr screen-info)))))
 
 (defun screen-width-height () ;; -> (w, h) in pixels
-  (cons (window--size-to-pixel nil (window-total-width)) (window--size-to-pixel nil (window-total-height)))
+  (cons (window-total-width) (window-total-height))
 )
 
 ;;;;;;;;;;;;;;;; test cases
 (message "%s" (convert-percentage-to-absolute-pixel-position 0.5 0.5))
+;; (jump-to-percentage-position 0.2 0.2)
 
 ;;;;;;;;;;;;;;;; misc notes
 
