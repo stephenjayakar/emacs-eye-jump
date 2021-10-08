@@ -13,13 +13,13 @@ fn hello() -> &'static str {
 }
 
 #[post("/jump")]
-fn hello() -> &'static str {
+fn meow() -> &'static str {
     "Hello, world!"
 }
 
 #[launch]
 fn rocket() -> _ {
-    rocket::build().mount("/", routes![hello])
+    rocket::build().mount("/", routes![hello, meow])
 }
 
 // -> (x_screen, y_screen)
