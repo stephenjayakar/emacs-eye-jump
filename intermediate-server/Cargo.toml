@@ -8,3 +8,4 @@ edition = "2018"
 
 [dependencies]
 enigo = "0.0.14"
+rocket = "0.5.0-rc.1"
